@@ -1,0 +1,201 @@
+definitions:
+  gorm.DeletedAt:
+    properties:
+      time:
+        type: string
+      valid:
+        description: Valid is true if Time is not NULL
+        type: boolean
+    type: object
+  httputil.HTTPError:
+    properties:
+      code:
+        example: 400
+        type: integer
+      message:
+        example: status bad request
+        type: string
+    type: object
+  models.Aluno:
+    properties:
+      cpf:
+        type: string
+      createdAt:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      id:
+        type: integer
+      nome:
+        type: string
+      rg:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /{nome}:
+    get:
+      consumes:
+      - application/json
+      description: Rota para exibir saudação
+      parameters:
+      - description: Seu nome
+        in: path
+        name: nome
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Aluno'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Exige saudação
+  /alunos:
+    get:
+      consumes:
+      - application/json
+      description: Rota para exibir todos os produtos
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Aluno'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Exibe todos Alunos
+    post:
+      consumes:
+      - application/json
+      description: Rota para criar novo alunos
+      operationId: alunos
+      parameters:
+      - description: Modelo do Aluno
+        in: body
+        name: aluno
+        required: true
+        schema:
+          $ref: '#/definitions/models.Aluno'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Aluno'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Cria novo aluno
+  /alunos/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Rota para criar deletar um aluno por sua chave de identificação
+        única ID
+      parameters:
+      - description: ID do Aluno
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Aluno'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Deleta um aluno por seu ID
+    get:
+      consumes:
+      - application/json
+      description: Rota para criar buscar um aluno por sua chave de identificação
+        única ID
+      parameters:
+      - description: ID do Aluno
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Aluno'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Busca um aluno por seu ID
+    patch:
+      consumes:
+      - application/json
+      description: Rota para alterar os dados de um aluno
+      parameters:
+      - description: ID do Aluno
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Modelo do Aluno
+        in: body
+        name: aluno
+        required: true
+        schema:
+          $ref: '#/definitions/models.Aluno'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Aluno'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Edita um aluno
+  /alunos/cpf/{cpf}:
+    get:
+      consumes:
+      - application/json
+      description: Rota para busca um aluno por seu CPF
+      parameters:
+      - description: CPF do Aluno
+        in: path
+        name: cpf
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Aluno'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Busca um aluno por seu CPF
+swagger: "2.0"
